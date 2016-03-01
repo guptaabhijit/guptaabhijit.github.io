@@ -1,9 +1,174 @@
+<!DOCTYPE html>
 <html>
+<head>
 <title>
 	Introduction
 </title>
+<style type="text/css">
+	#area3{
+		margin-left: 5em
+	}
+	#area2{
+		margin-left: 2em
+	}
+</style>
+</head>
+
 <body>
-	<h1>Hello Space</h1>
-	<p>This site is underconstruction please visit again shortly!</p>	
+	<h1>Hello NumberTheorians</h1>
+	<p>This site is underconstruction please visit again shortly!</p>
+
+	<div style="float:left;width=80%;">
+	<p>Hit a number and get its Euler Totient</p>
+	Enter Number:<textarea id="area1" rows="1"></textarea>
+	<button type="button" id = "mybtn" onclick="giveEuler()">
+	Submit
+	</button>
+	
+	<br>
+	<span id="check"></span>
+
+	<p>Hit a number and the modulus to find its multiplicative Inverse</p>
+	Enter Number::<textarea id="area2" rows="1"></textarea>
+	<br><br>
+	Enter Z::<textarea id="area3" rows="1"></textarea>
+	<br>
+	<button type="button" id = "mybtn2" onclick="giveModInverse()">
+	Submit
+	</button>
+
+	<br>
+	<span id="answer_mod"></span>
+	</div>
+
+
+	<div style="float:right;padding-right:300px;">
+	<p>Enter two numbers you wish to find the prime Intervals</p>
+
+
+Enter 1st Number:<textarea id="area4" rows="1"></textarea>
+<br>
+Enter 2nd Number:<textarea id="area5" rows="1"></textarea>
+<br><br>
+<button type="button" id = "mybtn3" onclick="prime()">
+Submit</button>
+<br>
+<br>
+<div id="mydivArea" style="visibility: hidden">
+<textarea id="fill" rows="15" cols="60"></textarea>
+</div>
+</div>
+
+
+
+<script type="text/javascript">
+	
+	function giveEuler(){
+		var x = document.getElementById('area1').value;
+		//document.writeln(x);
+		
+		if(isNaN(x)||x==''){
+			document.getElementById('check').innerHTML = "Enter number please";
+			return false;
+		}else{
+		
+		var result = x;
+		for(var p=2;p*p<=x;p++){
+			if(x%p==0){
+				while(x%p==0)
+					x/=p;
+				result *= (1.0-(1.0/p));
+			}
+		}
+		if(x>1)
+			result *= (1.0-(1.0/x));	
+		document.getElementById('check').innerHTML = "The Euler Totient is = "+parseInt(result);
+
+		return true;
+		}
+		//console.log(x);
+	}
+
+	function giveModInverse(){
+		var n = document.getElementById('area2').value;
+		var z = document.getElementById('area3').value;
+		var t1,t2,r1,r2,r,t,q;
+		t1 = 0;t2=1;r1 = z;r2 = n;
+
+		if(n==''||z==''||isNaN(n)||isNaN(z)){
+			document.getElementById('answer_mod').innerHTML = "Please Enter valid Numbers";	
+		}
+		else{
+			while(r2>0){
+				q = Math.floor(r1/r2);
+				r = r1 - q*r2;
+				r1 = r2;
+				r2 = r;
+				t = t1 - q*t2;
+				t1 = t2;
+				t2 = t;
+				//	document.writeln(q);
+
+			}
+			if(r1==1)
+				{
+					if(t1<0)
+					{
+						while(t1<0)
+						t1 = (t1*1 + parseInt(z));
+					}
+					document.getElementById('answer_mod').innerHTML = "The multiplicative Inverse is =  "+ t1;
+				}
+			else{
+					document.getElementById('answer_mod').innerHTML = "The multiplicative Inverse is not possible as numbers are not coprime ";
+			
+				}
+			}
+	}
+
+	function prime(){
+		var upper = 100000;
+		var sieve = Array.apply(null,Array(upper)).map(Number.prototype.valueOf,0);
+		sieve[0] = sieve[1]=1;
+		
+		for(var i=2;i*i<upper;i++){
+			if(sieve[i]==0)
+			{
+				var j=i*1+i*1;
+				while(j<upper)
+				{
+					sieve[j] = 1;
+					j = i*1+j*1;
+				}
+			}
+		}
+			var x = document.getElementById('area4').value;
+			var y = document.getElementById('area5').value;
+			if(x==' '||isNaN(x)||y==' '||isNaN(y))
+			{
+				document.getElementById('fill').innerHTML = "Please fill valid numbers";
+			}
+			else if(x>upper||y>upper)
+			{
+				document.getElementById('fill').innerHTML = "Sorry rightnow it doesnt support large values!";
+			}
+			else{
+				
+				var ans = [];
+				for(i=x;i<=y;i++){
+					if(sieve[i]==0)
+					{
+						ans.push(i);
+					}
+				}
+				document.getElementById('mydivArea').style.visibility = "visible";
+				document.getElementById('fill').innerHTML = ans;
+				//document.writeln(Number.MAX_VALUE);
+			}
+	}
+
+</script>
+
 </body>
 </html>
+
