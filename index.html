@@ -43,7 +43,7 @@
 
 
 	<div style="float:right;padding-right:300px;">
-	<p>Enter two numbers you wish to find the prime Intervals</p>
+	<p>Enter two numbers you wish to find the prime numbers in that range:</p>
 
 
 Enter 1st Number:<textarea id="area4" rows="1"></textarea>
@@ -134,11 +134,11 @@ Submit</button>
 		for(var i=2;i*i<upper;i++){
 			if(sieve[i]==0)
 			{
-				var j=i*1+i*1;
+				var j=(i*1) + (i*1);
 				while(j<upper)
 				{
 					sieve[j] = 1;
-					j = i*1+j*1;
+					j = (i*1) + (j*1);
 				}
 			}
 		}
@@ -156,15 +156,21 @@ Submit</button>
 			else{
 				
 				var ans = [];
-				for(i=x;i<=y;i++){
-					if(sieve[i]==0)
+				var count=0;
+				for(var p=parseInt(x);p<=parseInt(y);p++){
+					if(sieve[p]==0)
 					{
-						ans.push(i);
+						ans.push(p);
+						//count++;
+						//document.writeln(p);
 					}
+					//count++;
+
 				}
-				//document.getElementById('mydivArea').style.visibility = "visible";
+				//document.writeln(x);
+				//document.writeln(y);
 				document.getElementById('fill').innerHTML = ans;
-				//document.writeln(Number.MAX_VALUE);
+				
 			}
 	}
 
